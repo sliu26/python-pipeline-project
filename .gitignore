@@ -1,5 +1,0 @@
-*.fastq
-*.fastq.gz
-SRR*
-spades_output/
-

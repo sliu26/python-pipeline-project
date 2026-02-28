@@ -1,2 +1,20 @@
-#run results:
+Sample SRR5660030 had 10000 read pairs before and 8116 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660030, there are 18 contigs > 1000 bp and 32285 total bp.
+
+top hits for the longest contig:
+
+Sample SRR5660033 had 10000 read pairs before and 7134 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660033, there are 14 contigs > 1000 bp and 20779 total bp.
+
+top hits for the longest contig:
+
+Sample SRR5660044 had 10000 read pairs before and 7345 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660044, there are 18 contigs > 1000 bp and 29367 total bp.
+
+top hits for the longest contig:
+
+Sample SRR5660045 had 10000 read pairs before and 5317 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660045, there are 15 contigs > 1000 bp and 20795 total bp.
+
+top hits for the longest contig:
 

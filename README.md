@@ -1,41 +1,17 @@
-# NCBI Datasets
+dependencies: Python, Snakemake, Bowtie2, Samtools, SPAdes, BLAST, Biopython
 
-https://www.ncbi.nlm.nih.gov/datasets
+# python-pipeline-project
+step 1: retrieved sra and used wget to retrieve the srr 
+    wget [sra normalized data link from ncbi]
+step 2: used fasterq-dump to get paired end reads
+    (fasterq-dump ./[corresponding srr])
+step 3: used head to reduce size of fastq files and created sample fastq and some renaming after to keep consistent 
+    (head -n 40000 SRR56600*.fastq > SRR56600*.fastq)
 
-This zip archive contains an NCBI Datasets Data Package.
-
-NCBI Datasets Data Packages can include sequence, annotation and other data files, and metadata in one or more data report files.
-Data report files are in JSON Lines format.
-
----
-## FAQs
-### Where is the data I requested?
-
-Your data is in the subdirectory `ncbi_dataset/data/` contained within this zip archive.
-
-### I still can't find my data, can you help?
-
-We have identified a bug affecting Mac Safari users. When downloading data from the NCBI Datasets web interface, you may see only this README file after the download has completed (while other files appear to be missing).
-As a workaround to prevent this issue from recurring, we recommend disabling automatic zip archive extraction in Safari until Apple releases a bug fix.
-For more information, visit:
-https://www.ncbi.nlm.nih.gov/datasets/docs/reference-docs/mac-zip-bug/
-
-### How do I work with JSON Lines data reports?
-
-Visit our JSON Lines data report documentation page:
-https://www.ncbi.nlm.nih.gov/datasets/docs/v2/tutorials/working-with-jsonl-data-reports/
-
-### What is NCBI Datasets?
-
-NCBI Datasets is a resource that lets you easily gather data from across NCBI databases. Find and download gene, transcript, protein and genome sequences, annotation and metadata.
-
-### Where can I find NCBI Datasets documentation?
-
-Visit the NCBI Datasets documentation pages:
-https://www.ncbi.nlm.nih.gov/datasets/docs/
-
----
-
-National Center for Biotechnology Information
-National Library of Medicine
-info@ncbi.nlm.nih.gov
+bowtie: 
+4: went to ncbi and retrieve HCMV genome (GCF_000845245.1), and run datasets; https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000845245.1/ 
+    [download genome accession GCF_000845245.1 --include gff3,rna,cds,protein,genome,seq-report]
+5: unzip ncbi dataset.zip and use bowtie to create index to map to: (later used snakemake to download for me)
+- snakemake -c1 build_index
+    [bowtie2-build ncbi_dataset/data/GCF_000845245.1/GCF_000845245.1_ViralProj14559_genomic.fna HCMV]
+6: 

@@ -82,8 +82,8 @@ rule assemble_spades:
             -k 99 \
             -o results/assembly/{wildcards.sample}
         """
-
-rule assembly_stats: #calculate assembly stat
+#calculate assembly stat
+rule assembly_stats: 
     input:
         "results/assembly/{sample}/contigs.fasta"
     output:
@@ -117,13 +117,14 @@ rule longest_contig:
         os.makedirs("results/blast", exist_ok=True)
         longest = None
         max_len = 0
+        #find contig with maximum length
         for record in SeqIO.parse(input[0], "fasta"):
             if len(record.seq) > max_len:
                 max_len = len(record.seq)
                 longest = record
         if longest:     #used in blast query later
             SeqIO.write(longest, output[0], "fasta")
-
+#find longest contig to perform blast
 rule blast_longest:
     input:
         "results/blast/{sample}_longest.fasta"
@@ -141,6 +142,7 @@ rule blast_longest:
             > {output}
         """
 
+#find all results and compile to txt file
 rule build_report:
     input:
         before=expand("results/counts/{sample}_before.txt", sample=samples),
@@ -163,11 +165,9 @@ rule build_report:
                     count, total = f.read().strip().split("\t")
 
                 out.write(f"Sample {s} had {before} read pairs before and {after} read pairs after Bowtie2 filtering.\n")
-
                 out.write(f"In the assembly of sample {s}, there are {count} contigs > 1000 bp and {total} total bp.\n\n")
-
                 blast_file = f"results/blast/{s}_blast.txt"
-
+                
                 with open(blast_file) as bf:
                     lines = bf.readlines()
 
@@ -176,8 +176,8 @@ rule build_report:
                     for line in lines:
                         parts = line.strip().split("\t")
                         if len(parts) != 10:
-                            continue  # skip malformed lines
-                        sacc, pident, length, qstart, qend, sstart, send, bitscore, evalue, stitle = parts
+                            continue  
+                        sacc, pident, length, qstart, qend, sstart, send, bitscore, evalue, stitle = parts  #formatting output
                         out.write(f"{sacc}\t{pident}\t{length}\t{qstart}\t{qend}\t{sstart}\t{send}\t{bitscore}\t{evalue}\t{stitle}\n")
                 else:
                     out.write("no hits.\n")
